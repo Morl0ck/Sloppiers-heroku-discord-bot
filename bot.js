@@ -1,5 +1,4 @@
 var HTTPS = require('https');
-var cool = require('cool-ascii-faces');
 var index = require('./index.js');
 var botID = process.env.BOT_ID;
 
@@ -52,19 +51,5 @@ function postMessage(botResponse) {
   });
   botReq.end(JSON.stringify(body));
 }
-
-client.on('ready', () => {
-  console.log('I am ready!');
-
-
-  console.log(client.channels.find('id', '93906010124603392').members.array().length);
-  console.log(client.channels.find('id', '296821668029005845').members.array().length);
-});
-
-client.on('message', message => {
-  if (message.content === 'ping') {
-    message.reply('pong');
-  }
-});
 
 exports.respond = respond;

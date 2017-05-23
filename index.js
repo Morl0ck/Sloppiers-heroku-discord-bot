@@ -1,4 +1,7 @@
 var http, director, cool, bot, router, server, port;
+http        = require('http');
+director    = require('director');
+bot         = require('./bot.js');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -13,11 +16,6 @@ client.on('message', message => {
 });
 
 client.login('MzE2MDM5MDg1OTkzMjMwMzM3.DAU1WA.KJYur8IUsLDCvz4mRUemSsaKK8c');
-
-http        = require('http');
-director    = require('director');
-cool        = require('cool-ascii-faces');
-bot         = require('./bot.js');
 
 router = new director.http.Router({
   '/' : {
