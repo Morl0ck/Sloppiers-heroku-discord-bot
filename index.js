@@ -44,11 +44,3 @@ function ping() {
   this.res.writeHead(200);
   this.res.end("Hey, I'm Cool Guy.");
 }
-
-function getRocketLeagueUsers()
-{
-    var rl1 = client.channels.find('id', '93906010124603392').members.array().length;
-    var rl2 = client.channels.find('id', '296821668029005845').members.array().length;
-
-    return rl1 + rl2;
-}

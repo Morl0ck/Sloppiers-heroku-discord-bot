@@ -1,6 +1,6 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
-var botID = process.env.BOT_ID;
+var botID = process.env.BOT_ID || "d47abc76d7e03caf264184d73f";
 
 var indexClient = null;
 
@@ -9,12 +9,12 @@ function respond() {
       botRegex = /^\/cool guy$/,
       rocketLeagueRegex = /(rl|rocket league)\s?(anyone)?.*\??/i;
 
-  if(request.text && botRegex.test(request.text)) {
+  if (request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
     var botResponse = cool();
     postMessage(botResponse);
     this.res.end();
-  } else if(request.text && rocketLeagueRegex.test(request.text)) {
+  } else if (request.text && rocketLeagueRegex.test(request.text)) {
     this.res.writeHead(200);
     var botResponse = "Number people on rocket league channels on discord: " + getRocketLeagueUsers();
     postMessage(botResponse);
