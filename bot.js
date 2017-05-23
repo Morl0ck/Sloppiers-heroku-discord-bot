@@ -1,14 +1,20 @@
 var HTTPS = require('https');
-var index = require('./index.js');
+var cool = require('cool-ascii-faces');
 var botID = process.env.BOT_ID;
 
 var indexClient = null;
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
+      botRegex = /^\/cool guy$/,
       rocketLeagueRegex = /(rl|rocket league)\s?(anyone)?.*\??/i;
 
-  if(request.text && rocketLeagueRegex.test(request.text)) {
+  if(request.text && botRegex.test(request.text)) {
+    this.res.writeHead(200);
+    var botResponse = cool();
+    postMessage(botResponse);
+    this.res.end();
+  } else if(request.text && rocketLeagueRegex.test(request.text)) {
     this.res.writeHead(200);
     var botResponse = index.getRocketLeagueUsers();
     postMessage(botResponse);
