@@ -2,6 +2,8 @@ var HTTPS = require('https');
 var index = require('./index.js');
 var botID = process.env.BOT_ID;
 
+var indexClient = null;
+
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       rocketLeagueRegex = /(rl|rocket league)\s?(anyone)?.*\??/i;
@@ -52,4 +54,13 @@ function postMessage(botResponse) {
   botReq.end(JSON.stringify(body));
 }
 
+function getRocketLeagueUsers()
+{
+    var rl1 = indexClient.channels.find('id', '93906010124603392').members.array().length;
+    var rl2 = indexClient.channels.find('id', '296821668029005845').members.array().length;
+
+    return rl1 + rl2;
+}
+
+exports.client = indexClient;
 exports.respond = respond;
