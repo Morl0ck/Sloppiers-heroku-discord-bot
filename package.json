@@ -14,7 +14,7 @@
     "jquery": "^2.2.4"
   },
   "engines": {
-    "node": "4.0.0"
+    "node": "0.10.x"
   },
   "keywords": [
     "node",
