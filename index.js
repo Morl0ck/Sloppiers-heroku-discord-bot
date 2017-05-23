@@ -7,7 +7,7 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
   console.log('I am ready!');
-  bot.client = client;
+  bot.setClient(client);
 });
 
 client.on('message', message => {

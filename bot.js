@@ -16,7 +16,7 @@ function respond() {
     this.res.end();
   } else if(request.text && rocketLeagueRegex.test(request.text)) {
     this.res.writeHead(200);
-    var botResponse = index.getRocketLeagueUsers();
+    var botResponse = "Number people on rocket league channels on discord: " + getRocketLeagueUsers();
     postMessage(botResponse);
     this.res.end();
   } else {
@@ -68,5 +68,12 @@ function getRocketLeagueUsers()
     return rl1 + rl2;
 }
 
-exports.client = indexClient;
+function setClient(client){
+  indexClient = client;
+  console.log('client set!');
+
+  console.log('rocket league users', getRocketLeagueUsers());
+}
+
+exports.setClient = setClient;
 exports.respond = respond;
