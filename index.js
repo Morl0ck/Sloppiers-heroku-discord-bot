@@ -1,107 +1,55 @@
-var express = require('express')
-var app = express()
-var Discord = require("discord.js");
-var ver ="0.86"
-var mybot = new Discord.Client();
-var getJSON = require('get-JSON');
+var http, director, cool, bot, router, server, port;
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
-mybot.on("ready", function () {
-	console.log("Ready to begin! Serving in " + mybot.channels.length + " channels");
+client.on('ready', () => {
+  console.log('I am ready!');
 });
 
-mybot.on("message", function(message) {
-    if (message.content === "!live") {
-        getJSON("https://api.twitch.tv/kraken/streams/lalicel", function(err, res) {
-            if (res.stream == null) {
-                mybot.reply(message, "she is currently not live");
-            } else {
-                mybot.reply(message, "she is currently live");
-				mybot.sendMessage(message, "https://www.twitch.tv/lalicel");
-            }
-        });
-    }
-});
-//long comands 
-mybot.on("message", function(message){
-
-            if( message.content === "!my_avatar" ){
-
-        var usersAvatar = message.sender.avatarURL;
-
-        if(usersAvatar){
-            // user has an avatar
-
-            mybot.reply(message, "your avatar can be found at " + usersAvatar);
-
-        }else{
-            // user doesn't have an avatar
-
-            mybot.reply(message, "you don't have an avatar!");
-        }
-
-            }
-
-} );
-
-
-
-//bot stuff 
-mybot.on("message", function(message) {
-    if(message.content === "!help") {
-        mybot.reply(message, "**My current Commands** ```!about_bot, !live, !my_avatar, !twitch, !youtube, hype, cry```" );
-    }
-
+client.on('message', message => {
+  if (message.content === 'ping') {
+    message.reply('pong');
+  }
 });
 
-mybot.on("message", function(message) {
-    if(message.content === "!about_bot") {
-        mybot.reply(message, "I was made by SloppierKitty7. I was written in nodejs and i'm runing on heroku and soon will be on github. I'm current on version is: " + ver + " @SloppierKitty7 should really update me");
-		mybot.sendFile(message, "http://i.imgur.com/izUfF1f.png");
+client.login('MzE2MDM5MDg1OTkzMjMwMzM3.DAU1WA.KJYur8IUsLDCvz4mRUemSsaKK8c');
 
-    }
+http        = require('http');
+director    = require('director');
+cool        = require('cool-ascii-faces');
+bot         = require('./bot.js');
+
+router = new director.http.Router({
+  '/' : {
+    post: bot.respond,
+    get: ping
+  }
 });
 
-//links
+server = http.createServer(function (req, res) {
+  req.chunks = [];
+  req.on('data', function (chunk) {
+    req.chunks.push(chunk.toString());
+  });
 
-mybot.on("message", function(message) {
-    if(message.content === "!twitch") {
-        mybot.reply(message, "https://www.twitch.tv/lalicel");
-    }
+  router.dispatch(req, res, function(err) {
+    res.writeHead(err.status, {"Content-Type": "text/plain"});
+    res.end(err.message);
+  });
 });
 
-mybot.on("message", function(message) {
-    if(message.content === "!youtube") {
-        mybot.reply(message, "https://www.youtube.com/channel/UCVsd_WSEaW5oJTRZTI-2yBQ");
-    }
-});
+port = Number(process.env.PORT || 5000);
+server.listen(port);
 
-//emots
+function ping() {
+  this.res.writeHead(200);
+  this.res.end("Hey, I'm Cool Guy.");
+}
 
-mybot.on("message", function(message) {
-    if(message.content === "hype") {
-        mybot.sendFile(message, "http://i.imgur.com/zDPIzq4.png");
-    }
-});
-mybot.on("message", function(message) {
-    if(message.content === "cry") {
-        mybot.sendFile(message, "http://i.imgur.com/izUfF1f.png");
-    }
-});
+function getRocketLeagueUsers()
+{
+    var rl1 = client.channels.find('id', '93906010124603392').members.array().length;
+    var rl2 = client.channels.find('id', '296821668029005845').members.array().length;
 
-
-
-
-
-
-
-
-app.set('port', (process.env.PORT || 5000))
-app.use(express.static(__dirname + '/public'))
-
-app.get('/', function(request, response) {
-  response.send('Hello World!')
-})
-
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'))
-})
+    return rl1 + rl2;
+}
