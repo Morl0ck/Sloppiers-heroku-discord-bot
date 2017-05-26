@@ -66,16 +66,19 @@ function postMessage(botResponse) {
 function getRocketLeagueUsers()
 {
   var members = "";
-  var memberArray = indexClient.channels.find('id', '93906010124603392').members.array();
+  var memberArray1 = indexClient.channels.find('id', '93906010124603392').members.array();
 
-  for (var i = 0; i < memberArray.length; i++) {
-    members += "\n" + memberArray[i].user.username;
+  for (var i = 0; i < memberArray1.length; i++) {
+    members += "\n" + memberArray1[i].user.username;
   };
 
-  var rl1 = indexClient.channels.find('id', '93906010124603392').members.array().length;
-  var rl2 = indexClient.channels.find('id', '296821668029005845').members.array().length;
+  var memberArray2 = indexClient.channels.find('id', '296821668029005845').members.array();
 
-  return rl1 + rl2 + members;
+  for (var i = 0; i < memberArray2.length; i++) {
+    members += "\n" + memberArray2[i].user.username;
+  };
+
+  return memberArray1.length + memberArray2.length + members;
 }
 
 function setClient(client){
