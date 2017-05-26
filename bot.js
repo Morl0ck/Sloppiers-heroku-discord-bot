@@ -1,6 +1,6 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
-var botID = process.env.BOT_ID || "29baac225200a43712daff531b";
+var botID = process.env.BOT_ID || "24051ae9fb10a5321d454950f5";
 
 var indexClient = null;
 
@@ -65,10 +65,17 @@ function postMessage(botResponse) {
 
 function getRocketLeagueUsers()
 {
-    var rl1 = indexClient.channels.find('id', '93906010124603392').members.array().length;
-    var rl2 = indexClient.channels.find('id', '296821668029005845').members.array().length;
+  var members = "";
+  var memberArray = indexClient.channels.find('id', '93906010124603392').members.array();
 
-    return rl1 + rl2;
+  for (var i = 0; i < memberArray.length; i++) {
+    members += "\n" + memberArray[i].user.username;
+  };
+
+  var rl1 = indexClient.channels.find('id', '93906010124603392').members.array().length;
+  var rl2 = indexClient.channels.find('id', '296821668029005845').members.array().length;
+
+  return rl1 + rl2 + members;
 }
 
 function setClient(client){
